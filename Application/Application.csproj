@@ -6,6 +6,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="UseCases\AuthOperation\LogIn\" />
+    <Folder Include="UseCases\AuthOperation\Register\" />
     <Folder Include="UseCases\OdersOperation\Queries\" />
   </ItemGroup>
 

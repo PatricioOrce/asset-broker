@@ -1,4 +1,11 @@
+using API.Configurations;
 using Application.Configurations;
+using Infrastructure.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,15 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.ConfigureSwagger();
 builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddAuthenticationConfig(builder.Configuration);
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
-
-builder.Host.ConfigureLogging(logging =>
-{
-    logging.ClearProviders();
-    logging.AddConsole();
-});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

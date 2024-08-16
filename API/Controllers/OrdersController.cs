@@ -12,7 +12,8 @@ namespace API.Controllers
     [ApiController]
     public class OrdersController(IMediator _mediator) : ApiControllerBase
     {
-        [HttpPost()]
+        [HttpPost]
+        [Authorize]
         public async Task<Response<CreateOrderCommandResponse>> CreateOrder(CreateOrderCommandHandlerRequest request)
         {
             return await _mediator.Send(new CreateOrderCommandHandlerRequest() { something = request .something});
