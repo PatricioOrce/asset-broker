@@ -1,13 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="UseCases\AuthOperation\**" />
+    <EmbeddedResource Remove="UseCases\AuthOperation\**" />
+    <None Remove="UseCases\AuthOperation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\AuthOperation\LogIn\" />
-    <Folder Include="UseCases\AuthOperation\Register\" />
     <Folder Include="UseCases\OdersOperation\Queries\" />
   </ItemGroup>
 

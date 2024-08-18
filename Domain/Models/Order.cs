@@ -21,5 +21,7 @@ public partial class Order
 
     public decimal? TotalAmount { get; set; }
 
+    public virtual Asset Asset { get; set; } = null!;
+
     public virtual OrderStatus? Status { get; set; }
 }

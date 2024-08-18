@@ -9,5 +9,5 @@ public partial class AssetType
 
     public string Description { get; set; } = null!;
 
-    public virtual ICollection<FinancialAsset> FinancialAssets { get; set; } = new List<FinancialAsset>();
+    public virtual ICollection<Asset> Assets { get; set; } = new List<Asset>();
 }

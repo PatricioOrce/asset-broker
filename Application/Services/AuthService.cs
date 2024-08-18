@@ -3,37 +3,30 @@ using Domain.Models;
 using Domain.Utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Infrastructure.Services
+namespace Application.Services
 {
     public class AuthService(IAccountService _accountService, IConfiguration configuration) : IAuthService
     {
         const Int16 TOKEN_EXPIRATION = 1;
-
         public async Task<Response> LogIn(string email, string password)
         {
-            var response = new Response();
-            response.Message = "Error al iniciar session";
 
             var result = await _accountService.FindAccount(email);
-            if (result != null || BCrypt.Net.BCrypt.Verify(password, result!.Password))
+            if (result != null && BCrypt.Net.BCrypt.Verify(password, result!.Password))
             {
-                response.SetSuccessResponse(this.CreateToken(result));
-                return response;
+                return Response.Create(message: this.CreateToken(result));
             }
-            return response;
+            return Response.Create(statusCode: (int)HttpStatusCode.Unauthorized, message: "Error en el inicio de sesion: Datos incorrectos.");
+
         }
 
         public async Task<Response> Register(string email, string password)
         {
-            var response = new Response();
             if (!await _accountService.Exists(email))
             {
                 string hashedPass = BCrypt.Net.BCrypt.HashPassword(password);
@@ -42,17 +35,16 @@ namespace Infrastructure.Services
                     Email = email,
                     Password = hashedPass
                 };
-                response.SetSuccessResponse(await _accountService.Create(account));
-                return response;
+                return Response.Create(statusCode: (int)HttpStatusCode.Created, await _accountService.Create(account));
             }
-            throw new Exception("Hubo un error con el registro: Email ya esta en uso.");
+            return Response.Create(statusCode: (int)HttpStatusCode.Conflict, message: "Error en el registro: El email ya esta en uso.");
         }
 
         private string CreateToken(Account account)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, account.Email),
+                new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()),
             };
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["Jwt:SecretKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

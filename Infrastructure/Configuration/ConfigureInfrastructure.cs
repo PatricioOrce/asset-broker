@@ -1,6 +1,7 @@
-﻿using Domain.Interfaces;
+﻿using Application.Services;
+using Domain.Interfaces;
 using Infrastructure.Persistence.Contexts;
-using Infrastructure.Services;
+using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,8 +14,10 @@ namespace Infrastructure.Configuration
         {
             services.AddDbContext<AccountDbContext>(options =>
                options.UseSqlServer(configuration.GetConnectionString("AccountManagement")));
+            services.AddDbContext<CoreDbContext>(options =>
+               options.UseSqlServer(configuration.GetConnectionString("Core")));
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             return services;
         }
     }

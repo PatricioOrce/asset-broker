@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -16,7 +17,8 @@ namespace API.Controllers
         [Authorize]
         public async Task<Response<CreateOrderCommandResponse>> CreateOrder(CreateOrderCommandHandlerRequest request)
         {
-            return await _mediator.Send(new CreateOrderCommandHandlerRequest() { something = request .something});
+            request.AccountId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return await _mediator.Send(request);
         }
     }
 }

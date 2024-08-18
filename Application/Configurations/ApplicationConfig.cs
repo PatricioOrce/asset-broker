@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Services;
+using Domain.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,10 @@ namespace Application.Configurations
         public static void AddApplication(this IServiceCollection service) 
         {
             service.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(ApplicationConfig).Assembly));
+            service.AddScoped<IAuthService, AuthService>();
+            service.AddScoped<IOrderService, OrderService>();
+
+
         }
     }
 }

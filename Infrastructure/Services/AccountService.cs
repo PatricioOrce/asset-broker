@@ -3,7 +3,7 @@ using Domain.Models;
 using Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Services
+namespace Application.Services
 {
     public class AccountService(AccountDbContext _context) : IAccountService
     {
