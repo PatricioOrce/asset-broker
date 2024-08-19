@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.UseCases.OdersOperation.Commands
+namespace Application.UseCases.OdersOperation.Commands.Update
 {
-    internal class CreateOrderCommandValidator
+    public class UpdateOrderCommandResponse
     {
     }
 }

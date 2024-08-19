@@ -16,7 +16,7 @@ namespace Application.Services
         public async Task<Response> LogIn(string email, string password)
         {
 
-            var result = await _accountService.FindAccount(email);
+            var result = await _accountService.FindAccount(email.ToLower());
             if (result != null && BCrypt.Net.BCrypt.Verify(password, result!.Password))
             {
                 return Response.Create(message: this.CreateToken(result));
@@ -32,7 +32,7 @@ namespace Application.Services
                 string hashedPass = BCrypt.Net.BCrypt.HashPassword(password);
                 Account account = new()
                 {
-                    Email = email,
+                    Email = email.ToLower(),
                     Password = hashedPass
                 };
                 return Response.Create(statusCode: (int)HttpStatusCode.Created, await _accountService.Create(account));

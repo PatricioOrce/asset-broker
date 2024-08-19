@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.DTOs
 {
-    public class OrderDto
+    public class CreateOrderDto
     {
         public int OrderId { get; set; }
         public int AccountId { get; set; }
@@ -14,7 +14,6 @@ namespace Domain.DTOs
         public int Amount { get; set; }
         public decimal Price { get; set; }
         public char Operation { get; set; }
-        public int StatusId { get; set; }
         public decimal TotalAmount { get; set; }
     }
 }

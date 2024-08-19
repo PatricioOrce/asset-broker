@@ -26,14 +26,41 @@ namespace Application.Services
             return Response.Create((int)HttpStatusCode.Created, "Orden creada con exito!");
         }
 
-        public Task<Response<CreateOrderDto>> GetAllOrdersAsync()
+        public async Task<List<OrderDto>> GetAllOrdersAsync()
         {
-            throw new NotImplementedException();
+            var result = await _orderRepository.GetAllAsync();
+            return result.Select(order => new OrderDto
+            {
+                OrderId = order.Id,
+                AccountId = order.AccountId,
+                AssetId = order.AssetId,
+                Amount = order.Amount,
+                Price = order.Price,
+                Operation = order.Operation.FirstOrDefault(),
+                StatusId = order.StatusId.GetValueOrDefault(),
+                TotalAmount = order.TotalAmount ?? 0
+            }).ToList();
         }
 
-        public Task<Response> UpdateOrderAsync(string assetId, CreateOrderDto order)
+        public async Task<OrderDto> GetOrderById(int orderId)
         {
-            throw new NotImplementedException();
+            var order = await _orderRepository.GetByIdAsync(orderId);
+            return order is not null ? new OrderDto
+            {
+                OrderId = order.Id,
+                AccountId = order.AccountId,
+                AssetId = order.AssetId,
+                Amount = order.Amount,
+                Price = order.Price,
+                Operation = order.Operation.FirstOrDefault(),
+                StatusId = order.StatusId.GetValueOrDefault(),
+                TotalAmount = order.TotalAmount ?? 0
+            } : null;
+        }
+
+        public Task UpdateOrderAsync(Order order)
+        {
+            return _orderRepository.UpdateAsync(order);
         }
     }
 }

@@ -15,9 +15,9 @@ namespace Application.UseCases.OdersOperation.Strategies
         public decimal CalculateAmount(CreateOrderDto order)
         {
             var totalAmount = order.Price * order.Amount;
-            var fees = (totalAmount * TAX_PERC) / 100;
+            var fees = (totalAmount * FEES_PERC) / 100;
             var taxes = (fees * TAX_PERC) / 100;
-            return totalAmount - (taxes + FEES_PERC);
+            return totalAmount - (taxes + fees);
         }
     }
 }

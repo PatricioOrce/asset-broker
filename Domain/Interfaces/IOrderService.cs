@@ -1,4 +1,5 @@
 ﻿using Domain.DTOs;
+using Domain.Models;
 using Domain.Utils;
 
 namespace Domain.Interfaces
@@ -6,7 +7,8 @@ namespace Domain.Interfaces
     public interface IOrderService
     {
         Task<Response> CreateOrderAsync(CreateOrderDto asset);
-        Task<Response> UpdateOrderAsync(string assetId, CreateOrderDto asset);
-        Task<Response<CreateOrderDto>> GetAllOrdersAsync();
+        Task UpdateOrderAsync(Order asset);
+        Task<OrderDto> GetOrderById(int orderId);
+        Task<List<OrderDto>> GetAllOrdersAsync();
     }
 }

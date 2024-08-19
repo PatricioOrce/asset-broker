@@ -18,6 +18,7 @@ namespace Infrastructure.Configuration
                options.UseSqlServer(configuration.GetConnectionString("Core")));
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IAssetRepository, AssetRepository>();
             return services;
         }
     }

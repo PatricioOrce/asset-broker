@@ -10,9 +10,14 @@ namespace Application.UseCases.OdersOperation.Strategies
 {
     public class AccionCalculationStrategy : ICalculationStrategy
     {
+        const decimal FEES_PERC = 0.6m;
+        const int TAX_PERC = 21;
         public decimal CalculateAmount(CreateOrderDto order)
         {
-            throw new NotImplementedException();
+            var totalAmount = order.Price * order.Amount;
+            var fees = (totalAmount * FEES_PERC) / 100;
+            var taxes = (fees * TAX_PERC) / 100;
+            return totalAmount - (taxes + fees);
         }
     }
 }

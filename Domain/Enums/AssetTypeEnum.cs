@@ -11,6 +11,5 @@ namespace Domain.Enums
         Bono = 1,
         Accion = 2,
         FCI= 3,
-
     }
 }

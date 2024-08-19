@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.UseCases.OdersOperation.Commands
+namespace Application.UseCases.OdersOperation.Commands.Create
 {
     public class CreateOrderCommandResponse
     {
-        public int ResponseTest { get; set; }
+        public string Estado { get; set; }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using API.Models;
-using Application.UseCases.OdersOperation.Commands;
+using Application.UseCases.OdersOperation.Commands.Create;
+using Application.UseCases.OdersOperation.Commands.Update;
+using Application.UseCases.OdersOperation.Queries.GetAll;
+using Application.UseCases.OdersOperation.Queries.GetById;
 using Domain.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -11,14 +14,29 @@ namespace API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrdersController(IMediator _mediator) : ApiControllerBase
     {
         [HttpPost]
-        [Authorize]
-        public async Task<Response<CreateOrderCommandResponse>> CreateOrder(CreateOrderCommandHandlerRequest request)
+        public async Task<IActionResult> CreateOrder(CreateOrderCommandHandlerRequest request)
         {
             request.AccountId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return await _mediator.Send(request);
+            return Send(await _mediator.Send(request));
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetOrders()
+        {
+            return Send(await _mediator.Send(new GetAllOrdersQueryHandlerRequest()));
+        }
+        [HttpGet("{orderId}")]
+        public async Task<IActionResult> GetOrderById(int orderId)
+        {
+            return Send(await _mediator.Send(new GetOrderByIdQueryHandlerRequest() { OrderId = orderId }));
+        }
+        [HttpPut("{orderId}")]
+        public async Task<IActionResult> UpdateOrder(int orderId, [FromBody] UpdateOrderCommandHandlerRequest statusId)
+        {
+            return Send(await _mediator.Send(new UpdateOrderCommandHandlerRequest() { OrderId = orderId, StatusId = statusId.StatusId}));
         }
     }
 }
