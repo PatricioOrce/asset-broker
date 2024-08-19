@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using Domain.DTOs;
 using Domain.Interfaces;
 using Domain.Models;
 using Domain.Utils;
@@ -12,9 +13,9 @@ namespace API.Controllers
     {
 
         [HttpPost("/createAccount")]
-        public async Task<Response> Register(string email, string password) => await _authService.Register(email, password);
+        public async Task<Response> Register(AccountDto account) => await _authService.Register(account.Email, account.Password);
 
-        [HttpGet("/login")]
-        public async Task<Response> LogIn(string email, string password) => await _authService.LogIn(email, password);
+        [HttpPost("/login")]
+        public async Task<Response> LogIn(AccountDto account) => await _authService.LogIn(account.Email, account.Password);
     }
 }
