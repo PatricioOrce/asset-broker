@@ -27,6 +27,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors(policy =>
+    policy.WithOrigins("http://localhost")
+          .AllowAnyHeader()
+          .AllowAnyMethod());
 app.MapControllers();
+app.Urls.Add("http://*:80");
 app.Run();
