@@ -32,5 +32,5 @@ app.UseCors(policy =>
           .AllowAnyHeader()
           .AllowAnyMethod());
 app.MapControllers();
-app.Urls.Add("http://*:80");
+app.Urls.Add("http://*:5024");
 app.Run();

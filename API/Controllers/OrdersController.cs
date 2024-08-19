@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using Application.UseCases.OdersOperation.Commands.Create;
+using Application.UseCases.OdersOperation.Commands.Delete;
 using Application.UseCases.OdersOperation.Commands.Update;
 using Application.UseCases.OdersOperation.Queries.GetAll;
 using Application.UseCases.OdersOperation.Queries.GetById;
@@ -37,6 +38,11 @@ namespace API.Controllers
         public async Task<IActionResult> UpdateOrder(int orderId, [FromBody] UpdateOrderCommandHandlerRequest statusId)
         {
             return Send(await _mediator.Send(new UpdateOrderCommandHandlerRequest() { OrderId = orderId, StatusId = statusId.StatusId}));
+        }
+        [HttpDelete("{orderId}")]
+        public async Task<IActionResult> DeleteOrder(int orderId)
+        {
+            return Send(await _mediator.Send(new DeleteOrderCommandHandlerRequest() { OrderId = orderId }));
         }
     }
 }

@@ -6,16 +6,17 @@ namespace API.Models
     public class ApiControllerBase : ControllerBase
     {
         private static readonly Dictionary<int, string> DefaultMessages = new Dictionary<int, string>
-    {
-        { 200, "Request was successful." },
-        { 201, "Resource created successfully." },
-        { 204, "Request was successful, but there is no content." },
-        { 400, "Bad request. The server could not understand the request." },
-        { 401, "Unauthorized. Authentication is required or has failed." },
-        { 403, "Forbidden. The server understood the request but refuses to authorize it." },
-        { 404, "Not found. The requested resource could not be found." },
-        { 500, "Internal server error. An error occurred on the server." }
-    };
+        {
+            { 200, "La solicitud fue exitosa." },
+            { 201, "Recurso creado con éxito." },
+            { 204, "La solicitud fue exitosa, pero no hay contenido." },
+            { 400, "Solicitud incorrecta. El servidor no pudo entender la solicitud." },
+            { 401, "No autorizado. Se requiere autenticación o ha fallado." },
+            { 403, "Prohibido. El servidor entendió la solicitud pero se niega a autorizarla." },
+            { 404, "No encontrado. No se pudo encontrar el recurso solicitado." },
+            { 500, "Error interno del servidor. Ocurrió un error en el servidor." }
+        };
+
 
         protected IActionResult Send(Response response)
         {

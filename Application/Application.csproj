@@ -8,7 +8,6 @@
   <ItemGroup>
     <Folder Include="UseCases\AuthOperation\LogIn\" />
     <Folder Include="UseCases\AuthOperation\Register\" />
-    <Folder Include="UseCases\OdersOperation\Commands\Delete\" />
   </ItemGroup>
 
   <ItemGroup>
