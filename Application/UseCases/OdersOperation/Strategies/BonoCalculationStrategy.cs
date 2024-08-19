@@ -17,7 +17,7 @@ namespace Application.UseCases.OdersOperation.Strategies
             var totalAmount = order.Price * order.Amount;
             var fees = (totalAmount * FEES_PERC) / 100;
             var taxes = (fees * TAX_PERC) / 100;
-            return totalAmount - (taxes + fees);
+            return totalAmount + (taxes + fees);
         }
     }
 }
